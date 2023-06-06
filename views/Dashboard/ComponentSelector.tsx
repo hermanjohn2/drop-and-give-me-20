@@ -7,8 +7,7 @@ import Settings from '../../components/Settings';
 import Error from '../../components/Error';
 import Loading from '../../components/Loading';
 
-import { User } from '../../typesConfig/stateTypes';
-import { SelectedComponent } from './dashboardTypes';
+import { User, SelectedComponent } from '../../typesConfig/stateTypes';
 import { NavigationType } from '../../typesConfig/NavigationTypes';
 
 interface Props {
@@ -27,7 +26,7 @@ const ComponentSelector: React.FC<Props> = ({ component, user, navigation }) => 
         return <Stats user={user} />;
       }
       case 'profile': {
-        return <Profile user={user} />;
+        return <Profile user={user} navigation={navigation} />;
       }
       case 'settings': {
         return <Settings user={user} />;
