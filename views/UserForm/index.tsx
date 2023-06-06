@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { NavigationType } from '../../config/NavigationTypes';
+import { NavigationType } from '../../typesConfig/NavigationTypes';
 
 type Props = {
   navigation: NavigationType;

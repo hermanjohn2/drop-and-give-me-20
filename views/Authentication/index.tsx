@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationType } from '../../config/NavigationTypes';
+import { NavigationType } from '../../typesConfig/NavigationTypes';
 
 type Props = {
   navigation: NavigationType;
 };
 
 const Authentication: React.FC<Props> = ({ navigation }) => {
-  const [user, setUser] = useState(null);
-
   const retrieveUser = async () => {
     try {
       const storedUser = await AsyncStorage.getItem('user');

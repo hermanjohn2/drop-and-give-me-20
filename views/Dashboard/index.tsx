@@ -2,29 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { NavigationType } from '../../config/NavigationTypes';
+import Header from '../../components/Header';
+import ComponentSelector from './ComponentSelector';
+import Footer from '../../components/Footer';
+
+import { NavigationType } from '../../typesConfig/NavigationTypes';
+import { User, SelectedComponent } from '../../typesConfig/stateTypes';
 
 type Props = {
   navigation: NavigationType;
 };
 
-type User = {
-  age: Number;
-  height: String;
-  name: String;
-  weight: Number;
-};
-
 const DashboardScreen: React.FC<Props> = ({ navigation }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const handleClearUser = async () => {
-    try {
-      await AsyncStorage.removeItem('user');
-      navigation.navigate('auth');
-    } catch (error) {
-      console.log('Error clearing user:', error);
-    }
-  };
+  const [user, setUser] = useState<User>(null);
+  const [selectedComponent, setSelectedComponent] = useState<SelectedComponent>('overview');
 
   useEffect(() => {
     AsyncStorage.getItem('user').then(res => {
@@ -36,25 +27,13 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Header setSelectedComponent={setSelectedComponent} />
+
       <View style={styles.dashboardContainer}>
-        {user ? (
-          <>
-            <Text style={styles.dashboardTitle}>{`Welcome, ${user.name}`}</Text>
-            <TouchableOpacity style={styles.button} onPress={handleClearUser}>
-              <Text style={styles.buttonText}>Clear User</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <Text style={styles.dashboardTitle}>
-              Something went wrong with your account... Let's try again!
-            </Text>
-            <TouchableOpacity style={styles.button} onPress={handleClearUser}>
-              <Text style={styles.buttonText}>Clear User</Text>
-            </TouchableOpacity>
-          </>
-        )}
+        <ComponentSelector user={user} component={selectedComponent} navigation={navigation} />
       </View>
+
+      <Footer setSelectedComponent={setSelectedComponent} />
     </View>
   );
 };
@@ -63,7 +42,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#111',
+    paddingBottom: 20 // Add padding to create space below the footer
   },
   dashboardContainer: {
     width: '80%',
@@ -72,21 +53,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 20,
     alignItems: 'center'
-  },
-  dashboardTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20
-  },
-  button: {
-    backgroundColor: '#4286f4',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#fff'
   }
 });
 
