@@ -17,10 +17,4 @@ const Overview: React.FC<Props> = ({ user }) => {
   );
 };
 
-// const styles = StyleSheet.create({
-//   text: {
-//     color: 'whitesmoke'
-//   }
-// });
-
 export default Overview;

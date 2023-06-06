@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { SelectedComponent } from '../../typesConfig/stateTypes';
 import { componentSelectionOptions } from '../../config/componentSelectionOptions';
+import styles from './styles';
 
 type Props = {
   setSelectedComponent: (component: SelectedComponent) => void;
@@ -28,24 +29,5 @@ const Footer: React.FC<Props> = ({ setSelectedComponent }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 100,
-    backgroundColor: '#333'
-  },
-  footerIcon: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
 
 export default Footer;

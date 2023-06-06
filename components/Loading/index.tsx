@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
+
+import styles from './styles';
 
 type Props = {
   size?: 'small' | 'large';
@@ -13,13 +15,5 @@ const Loading: React.FC<Props> = ({ size = 'large', color = '#000000' }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
 
 export default Loading;

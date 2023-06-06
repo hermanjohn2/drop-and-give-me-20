@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Header from '../../components/Header';
@@ -8,6 +8,7 @@ import Footer from '../../components/Footer';
 
 import { NavigationType } from '../../typesConfig/NavigationTypes';
 import { User, SelectedComponent } from '../../typesConfig/stateTypes';
+import styles from './styles';
 
 type Props = {
   navigation: NavigationType;
@@ -37,23 +38,5 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#111',
-    paddingBottom: 20 // Add padding to create space below the footer
-  },
-  dashboardContainer: {
-    width: '80%',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 20,
-    alignItems: 'center'
-  }
-});
 
 export default DashboardScreen;

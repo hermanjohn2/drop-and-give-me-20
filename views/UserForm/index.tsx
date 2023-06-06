@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { NavigationType } from '../../typesConfig/NavigationTypes';
+import styles from './styles';
 
 type Props = {
   navigation: NavigationType;
@@ -13,6 +14,7 @@ const UserForm: React.FC<Props> = ({ navigation }) => {
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [age, setAge] = useState('');
+  const [displayWarning, setDisplayWarning] = useState<Boolean>(false);
 
   const handleFormSubmit = async () => {
     if (name) {
@@ -23,61 +25,60 @@ const UserForm: React.FC<Props> = ({ navigation }) => {
       } catch (error) {
         console.log('Error saving user:', error);
       }
+    } else {
+      setName('');
+      setDisplayWarning(true);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>User Form</Text>
-      <TextInput style={styles.input} placeholder='Name' value={name} onChangeText={setName} />
+      <Text style={styles.heading}>New Account</Text>
+      <TextInput
+        style={displayWarning ? [styles.input, styles.warnedInput] : styles.input}
+        placeholder='Name*'
+        placeholderTextColor={displayWarning ? '#fff' : '#999'}
+        value={name}
+        onChangeText={setName}
+      />
       <TextInput
         style={styles.input}
         placeholder='Height'
+        placeholderTextColor={'#999'}
         value={height}
         onChangeText={setHeight}
       />
       <TextInput
         style={styles.input}
         placeholder='Weight'
+        placeholderTextColor={'#999'}
         value={weight}
         onChangeText={setWeight}
       />
-      <TextInput style={styles.input} placeholder='Age' value={age} onChangeText={setAge} />
-      <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
+      <TextInput
+        style={styles.input}
+        placeholder='Age'
+        placeholderTextColor={'#999'}
+        value={age}
+        onChangeText={setAge}
+      />
+
+      <Text style={styles.requiredText}>
+        {displayWarning ? '* Denotes fields that must be filled out' : ''}
+      </Text>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.button, styles.submitButton]} onPress={handleFormSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
+          <Text style={styles.buttonText} onPress={() => navigation.navigate('auth')}>
+            Back
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-    width: '80%'
-  },
-  button: {
-    backgroundColor: '#4286f4',
-    padding: 10,
-    borderRadius: 5
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#fff'
-  }
-});
 
 export default UserForm;

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { componentSelectionOptions as dropdownOptions } from '../../config/componentSelectionOptions';
 import { SelectedComponent, ShowDropdown } from '../../typesConfig/stateTypes';
+import styles from './styles';
 
 type Props = {
   setSelectedComponent: (component: SelectedComponent) => void;
@@ -43,38 +44,5 @@ const Header: React.FC<Props> = ({ setSelectedComponent }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 50,
-    right: 20,
-    zIndex: 999
-  },
-  settingsIcon: {
-    padding: 10
-  },
-  dropdown: {
-    position: 'absolute',
-    top: 40,
-    right: 0,
-    backgroundColor: '#333',
-    borderRadius: 5,
-    padding: 10,
-    width: 150
-  },
-  dropdownItem: {
-    padding: 5,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  dropdownItemText: {
-    color: '#fff',
-    fontSize: 16
-  },
-  dropdownIcon: {
-    marginRight: 10
-  }
-});
 
 export default Header;
